@@ -168,7 +168,34 @@
 
 			}
 
-			
+			//给document注册onkeydown事件
+			document.onkeydown = function(e){
+				e = e || window.event;
+				var keyCode = e.which || e.keyCode;
+				if(keyCode ==  37){//left
+					if(direction != 'right'){
+						direction = 'left';
+					}
+				}else if(keyCode ==  38){//top
+					if(direction != 'down'){
+						direction = 'top';
+					}
+
+				}else if(keyCode ==  39){//right
+					if(direction != 'left'){
+						direction = 'right';
+					}
+
+				}else if(keyCode ==  40){//down
+					if(direction != 'top'){
+						direction = 'down';
+					}
+
+				}
+				move();
+			};
+	
+
 
 
 		})();
