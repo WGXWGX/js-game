@@ -110,8 +110,65 @@
 				}, 300);
 			};
 
-			
+		//蛇移动的函数
+			function move(){
+				var snakeHead = snakeBody[0];
+				var nextPos;
+				if(direction == 'left'){
+					nextPos = {
+						left: snakeHead.offsetLeft - 20,
+						top: snakeHead.offsetTop
+					};
+				}else if(direction == 'top'){
+					nextPos = {
+						left: snakeHead.offsetLeft,
+						top: snakeHead.offsetTop - 20
+					};
+				}else if(direction == 'right'){
+					nextPos = {
+						left: snakeHead.offsetLeft + 20,
+						top: snakeHead.offsetTop
+					};
+				}else if(direction == 'down'){
+					nextPos = {
+						left: snakeHead.offsetLeft,
+						top: snakeHead.offsetTop + 20
+					};
+				}
+				
+				//4. 蛇吃食物和增长身体
+				if(nextPos.left == oFood.offsetLeft && nextPos.top == oFood.offsetTop){
+					oFood.className = 'block snake-block';
+					oFood.style.left = snakeHead.offsetLeft + 'px';
+					oFood.style.top = snakeHead.offsetTop + 'px';
+					snakeHead.style.left = nextPos.left + 'px';
+					snakeHead.style.top = nextPos.top + 'px';
+					snakeBody.splice(1,0,oFood);
+					createFood();
+				}else{
+					for(var i=0; i<snakeBody.length; i++){
+						var nowPos = {
+							left: snakeBody[i].offsetLeft,
+							top: snakeBody[i].offsetTop
+						};
+						snakeBody[i].style.left = nextPos.left + 'px';
+						snakeBody[i].style.top = nextPos.top + 'px';
+						nextPos = nowPos;
+					}
+				}
 
+				//5. 判断是否吃到自己和墙
+				for(var i=4; i<snakeBody.length; i++){
+					if(snakeBody[i].offsetLeft == snakeHead.offsetLeft && snakeBody[i].offsetTop == snakeHead.offsetTop){
+						alert('Game over!');
+						clearInterval(timer);
+					}
+				}
+
+
+			}
+
+			
 
 
 		})();
